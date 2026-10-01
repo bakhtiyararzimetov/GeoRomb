@@ -1,8 +1,12 @@
 {
  "v": 2,
- "ts": 1790339681,
+ "ts": 1790878272,
  "ids": [],
  "lic": [
+  {
+   "id": "2L87K5CLJF",
+   "exp": "20261008"
+  },
   {
    "id": "BDC6EZMUDJ",
    "exp": "20261001"
@@ -16,5 +20,5 @@
    "exp": "0"
   }
  ],
- "sig": "ERBdPPTWSPwHIno6rzM2DEz0w3ZeVEdZyG3tCD00rR5XJ3jwWMeU-TDHoVxSF97vg9AmjnLzvBYMvJTPyzm4Gw"
+ "sig": "-maMnDgeCN-QxxkinHBS5SSJcp2J6PpgTC2bp1sHvIDzY6y5w90EK6bUYkwJN-K3rDlTMwm9dekqPTCYoDsBug"
 }
