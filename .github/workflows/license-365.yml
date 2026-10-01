@@ -1,0 +1,21 @@
+name: "3. Активация на 365 дней"
+on:
+  workflow_dispatch:
+    inputs:
+      ids:
+        description: "ID устройств — до 20 штук через пробел или запятую (например ABCDE-23456 FGHJK-78923). Если ID уже активен — срок продлится на 365 дней."
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  run:
+    uses: ./.github/workflows/_license.yml
+    with:
+      cmd: grant
+      days: "365"
+      ids: ${{ inputs.ids }}
+    secrets: inherit

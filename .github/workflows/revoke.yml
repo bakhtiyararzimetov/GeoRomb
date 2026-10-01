@@ -1,0 +1,20 @@
+name: "4. Отозвать лицензию"
+on:
+  workflow_dispatch:
+    inputs:
+      ids:
+        description: "ID устройств — до 20 штук через пробел или запятую. Приложение на этих телефонах заблокируется."
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  run:
+    uses: ./.github/workflows/_license.yml
+    with:
+      cmd: revoke
+      ids: ${{ inputs.ids }}
+    secrets: inherit

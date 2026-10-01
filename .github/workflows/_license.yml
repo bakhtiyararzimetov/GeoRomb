@@ -1,0 +1,52 @@
+# Общий шаг для шаблонов: подписывает revoked.json закрытым ключом из секрета и публикует его.
+name: "_ общий шаг (не запускать)"
+on:
+  workflow_call:
+    inputs:
+      cmd:  { type: string, required: true }        # grant | revoke
+      days: { type: string, required: false, default: "" }
+      ids:  { type: string, required: true }
+    secrets:
+      GEOROMB_PRIVATE_KEY: { required: true }
+
+permissions:
+  contents: write
+  pages: write
+
+# два запуска подряд не должны перезаписать друг друга
+concurrency:
+  group: revoked-json
+  cancel-in-progress: false
+
+jobs:
+  sign:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Tashkent
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Подписать список
+        id: grant
+        env:
+          GEOROMB_PRIVATE_KEY: ${{ secrets.GEOROMB_PRIVATE_KEY }}
+          CMD: ${{ inputs.cmd }}
+          DAYS: ${{ inputs.days }}
+          IDS: ${{ inputs.ids }}
+        run: |
+          if [ "$CMD" = "grant" ]; then node tools/grant.ts grant "$DAYS" "$IDS"; else node tools/grant.ts revoke "$IDS"; fi
+      - name: Опубликовать revoked.json
+        env:
+          MSG: ${{ steps.grant.outputs.message }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add revoked.json
+          git commit -m "$MSG"
+          git push
+          # пересобрать GitHub Pages сразу (push от бота сам сборку может не запустить)
+          curl -fsS -X POST -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pages/builds" >/dev/null || echo "Pages обновятся сами"
