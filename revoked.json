@@ -1,6 +1,6 @@
 {
  "v": 2,
- "ts": 1790878603,
+ "ts": 1791300311,
  "ids": [],
  "lic": [
   {
@@ -20,9 +20,13 @@
    "exp": "0"
   },
   {
+   "id": "KF7HKCG7K2",
+   "exp": "20271006"
+  },
+  {
    "id": "TBXAJL9K3Y",
    "exp": "20261031"
   }
  ],
- "sig": "pfBgCHiF0gFYPy17hnl8hJhQo9IqaJ-n4KdxZOKjLrY4h4tJWqzF5W7cUT3adTRTOeyIl6ZTWdYPlILLErJTew"
+ "sig": "HgwOcAzZmJVno-HjhTB6kdqkPQIiCRKcRmGPDxnzYXjNpA4V2k8BdKIbd3CjV3dJWCQzZJ1o95OhxECsGVxM_g"
 }
